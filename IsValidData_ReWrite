@@ -1,0 +1,174 @@
+private static string IsPresent(string value, string name)
+{
+    string msg = "";
+    if (value == "")
+    {
+        msg = name + " is a required field\n";
+    }
+    return msg;
+
+}
+private static string IsDouble(string value, string name)
+{
+    string msg = "";
+    if (!Double.TryParse(value, out _) && value != "")
+    {
+        msg = name + " must be a valid decimal value.\n";
+    }
+    return msg;
+}
+
+
+
+/*      
+Ununsed for now, will work on in future.
+private void fillMeIn(ref TextBox TBItself, ref string txtBoxText, ref string txtBoxName, string newTBItself, string newtxtBoxText, string newtxtBoxName)
+{
+    TextBox NEWBOX = (TextBox)newTBItself;
+    TBItself = newTBItself;
+    // try making a method to fill in variables
+}*/
+
+private bool IsValidData()
+{
+
+    /*
+     * -------------------------- *
+     *         HOW TO USE         *
+     * -------------------------- *
+    
+    Thanks to the rewrite, you can now easily use the
+    IsValidData Method without having to change every
+    little thing. Simply use the new lines of code below
+    which works thanks to the variables "txtBoxText, txtBoxName, and TBItself"
+    to add new error checks for every textbox.
+
+    To add a new error check for a textbox, copy the "Fill Me In variables" and edit them accordingly,
+    then paste them. Then below that, copy and paste the "Error Checking Lines"
+
+    
+
+    COPY START HERE - "Fill Me In Variables"
+    -----------------
+    TextBox TBItself = txtCypher;
+    string txtBoxText = ((TextBox)txtCypher).Text;
+    string txtBoxName = "Cyper";
+    -----------------
+    COPY END HERE - "Fill Me In Variables"
+
+
+    COPY START HERE - "Error Checking Lines"
+    -----------------
+    if (IsPresent(txtBoxText, txtBoxName) != "")
+    {
+        errorMessage.Add(IsPresent(txtBoxText, txtBoxName));
+        TBItself.BackColor = Color.LightPink;
+    } 
+    else if (IsDouble(txtBoxText, txtBoxName) != "") 
+    {
+        errorMessage.Add(IsDouble(txtBoxText, txtBoxName));
+        TBItself.BackColor = Color.LightPink;
+    }
+    else
+    {
+        ResetAllControlsBackColor(TBItself);
+    }
+    -----------------
+    COPY END HERE - "Error Checking Lines"
+
+
+    Professor Abimbola I hope you like this rewrite of 
+    the original method you provided, I already
+    modified it previously, but the new version
+    is much cleaner and has so much ease of use
+    for future usage. Let me know what you think of it
+    and the instructions I provided, I worked really hard
+    on it so I hope its good!
+
+    */
+
+
+    // ACTUAL CODE STARTS HERE
+
+
+    bool success = true;
+
+    // Fill Me In Variables
+    TextBox TBItself = txtCypher;
+    string txtBoxText = ((TextBox)txtCypher).Text;
+    string txtBoxName = "Cyper";
+
+    List<String> errorMessage = new List<String>();
+    // Cypher Text Box
+    if (IsPresent(txtBoxText, txtBoxName) != "")
+    {
+        errorMessage.Add(IsPresent(txtBoxText, txtBoxName));
+        TBItself.BackColor = Color.LightPink;
+    } 
+    else if (IsDouble(txtBoxText, txtBoxName) != "") 
+    {
+        errorMessage.Add(IsDouble(txtBoxText, txtBoxName));
+        TBItself.BackColor = Color.LightPink;
+    }
+    else
+    {
+        ResetAllControlsBackColor(TBItself);
+    }
+
+    // Input Text Box (Just for testing purposes, remove me after)
+
+    TBItself = txtInput;
+    txtBoxText = ((TextBox)txtInput).Text;
+    txtBoxName = "Input";
+
+    if (IsPresent(txtBoxText, txtBoxName) != "")
+    {
+        errorMessage.Add(IsPresent(txtBoxText, txtBoxName));
+        TBItself.BackColor = Color.LightPink;
+    }
+    else if (IsDouble(txtBoxText, txtBoxName) != "")
+    {
+        errorMessage.Add(IsDouble(txtBoxText, txtBoxName));
+        TBItself.BackColor = Color.LightPink;
+    }
+    else
+    {
+        ResetAllControlsBackColor(TBItself);
+    }
+
+    if (errorMessage.Count > 0)
+    {
+        string msgBoxTxt = "";
+        success = false;
+        if (errorMessage.Count == 1)
+        {
+            msgBoxTxt = errorMessage[0];
+            MessageBox.Show(msgBoxTxt, "Entry Error");
+        }
+        else if (errorMessage.Count > 1)
+        {
+            msgBoxTxt = "";
+            for (int i = 0; i < errorMessage.Count; i++)
+            {
+                msgBoxTxt += errorMessage[i];
+            }
+            MessageBox.Show(msgBoxTxt, "Multiple Entry Errors");
+        }
+    }
+    return success;
+}
+
+private void ResetAllControlsBackColor(Control control)
+{
+    control.BackColor = SystemColors.Control;
+    //control.BackColor = Color.Black;
+    control.ForeColor = SystemColors.ControlText;
+    if (control.HasChildren)
+    {
+        // Recursively call this method for each child control.
+        foreach (Control childControl in control.Controls)
+        {
+            ResetAllControlsBackColor(childControl);
+        }
+    }
+}
